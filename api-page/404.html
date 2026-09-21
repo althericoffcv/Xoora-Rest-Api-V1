@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>404 · Page not found — XOORA</title>
+  <meta name="description" content="The page you are looking for does not exist.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#f3f7ff">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="https://files.catbox.moe/kijnl7.jpg" type="image/jpeg">
+
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('xoora.theme') === 'dark') {
+          document.documentElement.dataset.theme = 'dark';
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#070d22');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/layout.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/pages.css">
+</head>
+<body class="page-error">
+  <main class="error-page" id="main">
+    <header class="error-page__bar">
+      <a class="brand" href="/">
+        <img class="brand__logo" src="https://files.catbox.moe/n4dwml.png" alt="XOORA" width="120" height="34" decoding="async"
+             onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'brand__fallback',textContent:'XOORA'}))">
+      </a>
+    </header>
+    <div class="error-page__body">
+      <section class="error-card hud" aria-labelledby="error-title">
+        <span class="error-card__slash" aria-hidden="true"></span>
+        <p class="error-code" aria-hidden="true">404</p>
+        <h1 id="error-title">Page not found</h1>
+        <p class="error-card__text">The page you’re looking for doesn’t exist or may have moved. If you were calling an API, double-check the endpoint path in the documentation.</p>
+        <div class="error-actions">
+          <a class="btn btn--primary" href="/">Back to home</a>
+          <a class="btn" href="/docs">Documentation</a>
+          <a class="btn btn--ghost" href="/status">System status</a>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,117 @@
+{
+  "name": "XOORA",
+  "version": "1.5.5",
+  "description": "Simple, reliable and high-performance REST APIs for your next application.",
+  "site": {
+    "title": "XOORA — REST API Platform",
+    "baseUrl": "",
+    "assets": {
+      "logo": "https://files.catbox.moe/n4dwml.png",
+      "favicon": "https://files.catbox.moe/kijnl7.jpg",
+      "hero": "https://files.catbox.moe/xwhhwj.png",
+      "docsRobot": "https://files.catbox.moe/gfd4bv.png",
+      "statusHealthy": "https://files.catbox.moe/9a74v6.png"
+    }
+  },
+  "auth": {
+    "required": false,
+    "keysUrl": "",
+    "signupUrl": ""
+  },
+  "status": {
+    "incidents": []
+  },
+  "header": {
+    "status": "Online!",
+    "imageSrc": [
+      "https://files.catbox.moe/tbk8kv.gif"
+    ],
+    "imageSize": {
+      "mobile": "150%",
+      "tablet": "150%",
+      "desktop": "180%"
+    }
+  },
+  "apiSettings": {
+    "creator": "Bayu Official"
+  },
+  "links": [
+    {
+      "name": "About Me | バユ",
+      "url": "https://www.about-bayu.web.id"
+    },
+    {
+      "name": "Contact Me | 接触",
+      "url": "https://wa.me/62895406178006"
+    }
+  ],
+  "categories": [
+    {
+      "name": "AI (人工知能)",
+      "icon": "sparkles",
+      "items": [
+        {
+          "name": "LuminAI",
+          "desc": "Talk with luminai",
+          "path": "/ai/luminai?text=",
+          "icon": "sparkles",
+          "params": {
+            "text": { "description": "The message to send to the model.", "example": "Hello! Who are you?" }
+          },
+          "sample": { "result": "Hi! I'm LuminAI. How can I help you today?" }
+        },
+        {
+          "name": "HydroMind",
+          "desc": "Talk with hydromind",
+          "path": "/ai/hydromind?text=&model=",
+          "innerDesc": "See the list of supported AI models here: https://mind.hydrooo.web.id",
+          "icon": "cpu",
+          "params": {
+            "text": { "description": "The message to send to the model.", "example": "Hello!" },
+            "model": { "description": "ID of the model to use. Supported models are listed at https://mind.hydrooo.web.id" }
+          },
+          "sample": { "result": "Hello! How can I help you today?" }
+        }
+      ]
+    },
+    {
+      "name": "Random (ランダム)",
+      "icon": "shuffle",
+      "items": [
+        {
+          "name": "Blue Archive",
+          "desc": "Blue Archive Random Images",
+          "path": "/random/ba",
+          "icon": "image",
+          "response": "image"
+        }
+      ]
+    },
+    {
+      "name": "Search Tools (検索ツール)",
+      "icon": "search",
+      "items": [
+        {
+          "name": "YouTube",
+          "desc": "Video search",
+          "path": "/search/youtube?q=",
+          "icon": "play",
+          "params": {
+            "q": { "description": "The search query.", "example": "lofi hip hop" }
+          },
+          "sample": {
+            "result": [
+              {
+                "title": "Lofi Hip Hop Mix",
+                "channel": "Chill Beats",
+                "duration": "1:02:15",
+                "imageUrl": "https://i.ytimg.com/vi/VIDEO_ID/hqdefault.jpg",
+                "link": "https://youtube.com/watch?v=VIDEO_ID"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

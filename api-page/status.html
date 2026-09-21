@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>API Status — XOORA</title>
+  <meta name="description" content="Live XOORA API status: service health, request statistics, response times and recent incidents.">
+  <meta name="theme-color" content="#f3f7ff">
+  <meta name="color-scheme" content="light dark">
+
+  <link rel="icon" href="https://files.catbox.moe/kijnl7.jpg" type="image/jpeg">
+  <link rel="apple-touch-icon" href="https://files.catbox.moe/kijnl7.jpg">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="XOORA">
+  <meta property="og:title" content="API Status — XOORA">
+  <meta property="og:description" content="Live XOORA API status: service health, request statistics, response times and recent incidents.">
+  <meta property="og:image" content="https://files.catbox.moe/9a74v6.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="API Status — XOORA">
+  <meta name="twitter:description" content="Live XOORA API status: service health, request statistics, response times and recent incidents.">
+  <meta name="twitter:image" content="https://files.catbox.moe/9a74v6.png">
+
+  <!-- Applies the saved theme before first paint (light is the default) -->
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('xoora.theme') === 'dark') {
+          document.documentElement.dataset.theme = 'dark';
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#070d22');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://files.catbox.moe">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/layout.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/pages.css">
+
+  <!-- Start fetching config, scripts and key artwork in parallel.
+       Image URLs mirror site.assets in src/settings.json; if you change those, update these hints too. -->
+  <link rel="preload" href="/src/settings.json" as="fetch" crossorigin>
+  <link rel="modulepreload" href="/assets/js/core/dom.js">
+  <link rel="modulepreload" href="/assets/js/core/icons.js">
+  <link rel="modulepreload" href="/assets/js/core/ui.js">
+  <link rel="modulepreload" href="/assets/js/core/format.js">
+  <link rel="modulepreload" href="/assets/js/core/config.js">
+  <link rel="modulepreload" href="/assets/js/core/status-data.js">
+  <link rel="modulepreload" href="/assets/js/components/cards.js">
+  <link rel="modulepreload" href="/assets/js/components/layout.js">
+  <link rel="modulepreload" href="/assets/js/components/chart.js">
+  <link rel="modulepreload" href="/assets/js/components/status.js">
+  <link rel="preload" href="https://files.catbox.moe/n4dwml.png" as="image">
+  <link rel="preload" href="https://files.catbox.moe/9a74v6.png" as="image" fetchpriority="high">
+</head>
+<body class="page-status">
+  <div id="app">
+    <header class="site-header"><div class="site-header__bar container"></div></header>
+  </div>
+  <noscript><p class="noscript">XOORA needs JavaScript to load the API catalog. Please enable it and reload the page.</p></noscript>
+  <script type="module" src="/assets/js/pages/status.js"></script>
+</body>
+</html>
