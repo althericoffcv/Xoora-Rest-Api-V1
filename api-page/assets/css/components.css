@@ -939,3 +939,110 @@ a.chip:hover { border-color: var(--blue); text-decoration: none; transform: tran
   .code-tabs__bar .copy-btn { justify-content: center; min-width: 40px; padding: 0 10px; }
   .code-tabs__bar .copy-btn__label { display: none; }
 }
+
+/* Folder Accordion */
+.api-folder {
+  background: var(--surface);
+  border: 1px solid var(--line-light);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  box-shadow: var(--sh-1);
+}
+.api-folder__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s;
+}
+.api-folder__toggle:hover {
+  background: var(--surface-hover);
+}
+.api-folder__title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  font-size: 1.125rem;
+  flex: 1;
+}
+.api-folder__count {
+  background: var(--line-light);
+  color: var(--ink-2);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-right: 12px;
+}
+.api-folder__arrow {
+  transition: transform 0.2s;
+  color: var(--ink-3);
+}
+.api-folder__content {
+  border-top: 1px solid var(--line-light);
+  background: var(--bg);
+}
+
+.api-row {
+  border-bottom: 1px solid var(--line-light);
+}
+.api-row:last-child {
+  border-bottom: none;
+}
+.api-row__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s;
+}
+.api-row__toggle:hover {
+  background: var(--surface);
+}
+.api-row__info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+.api-row__icon {
+  color: var(--accent);
+  display: flex;
+}
+.api-row__name {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--ink-1);
+}
+.api-row__route {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 16px;
+}
+.api-row__path {
+  font-size: 0.875rem;
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+}
+.api-row__arrow {
+  transition: transform 0.2s;
+  color: var(--ink-3);
+}
+.api-row__detail {
+  padding: 16px;
+  background: var(--surface);
+  border-top: 1px dashed var(--line-light);
+}

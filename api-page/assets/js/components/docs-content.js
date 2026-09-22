@@ -144,19 +144,53 @@ export function EndpointsSection(config) {
     { id: 'endpoints', title: 'Endpoints', lead: 'All endpoints use GET and return JSON unless noted otherwise.' },
     config.categories
       .filter((category) => category.items.length)
-      .map((category) =>
-        h(
-          'div',
-          { class: 'doc-category' },
-          SubHeading(
-            { id: `category-${category.id}` },
-            h('span', { class: 'doc-h__icon' }, icon(category.icon, { size: 18 })),
+      .map((category) => {
+        const contentDiv = h('div', { class: 'api-folder__content', hidden: true });
+        const arrow = icon('chevron-right', { size: 18, className: 'api-folder__arrow' });
+        
+        const toggleBtn = h('button', { type: 'button', class: 'api-folder__toggle', onclick: () => {
+          contentDiv.hidden = !contentDiv.hidden;
+          arrow.style.transform = contentDiv.hidden ? 'rotate(0deg)' : 'rotate(90deg)';
+        } }, 
+          h('span', { class: 'api-folder__title', id: `category-${category.id}`, dataset: { toc: '3' } }, 
+            h('span', { class: 'doc-h__icon' }, icon(category.icon, { size: 18 })), 
             category.label,
             category.native ? h('span', { class: 'doc-h__native', lang: cjk.test(category.native) ? 'ja' : null }, category.native) : null
           ),
-          category.items.map((item) => EndpointCard({ config, item }))
-        )
-      )
+          h('span', { class: 'api-folder__count' }, String(category.items.length)),
+          arrow
+        );
+
+        category.items.forEach(item => {
+           const detailDiv = h('div', { class: 'api-row__detail', hidden: true });
+           let isRendered = false;
+           
+           const arrowRow = icon('chevron-right', { size: 16, className: 'api-row__arrow' });
+           const rowBtn = h('button', { type: 'button', class: 'api-row__toggle', id: `endpoint-${item.id}`, onclick: () => {
+             detailDiv.hidden = !detailDiv.hidden;
+             arrowRow.style.transform = detailDiv.hidden ? 'rotate(0deg)' : 'rotate(90deg)';
+             if (!detailDiv.hidden && !isRendered) {
+               detailDiv.append(EndpointCard({ config, item }));
+               isRendered = true;
+             }
+           }}, 
+             h('div', { class: 'api-row__info' },
+               h('span', { class: 'api-row__icon' }, icon(item.icon, { size: 16 })),
+               h('span', { class: 'api-row__name' }, item.name)
+             ),
+             h('div', { class: 'api-row__route' }, 
+               h('span', { class: ['method', `method--${item.method.toLowerCase()}`] }, item.method),
+               h('code', { class: 'api-row__path' }, item.endpoint)
+             ),
+             arrowRow
+           );
+           
+           const rowContainer = h('div', { class: 'api-row' }, rowBtn, detailDiv);
+           contentDiv.append(rowContainer);
+        });
+
+        return h('div', { class: 'api-folder' }, toggleBtn, contentDiv);
+      })
   );
 }
 

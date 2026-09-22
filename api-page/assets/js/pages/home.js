@@ -15,104 +15,59 @@ function SectionHeader({ id, title, action }) {
   return h('div', { class: 'section-head' }, h('h2', { class: 'section-head__title', id }, title), action || null);
 }
 
-/* ---------- popular APIs: category chips, search and grouped cards ---------- */
+/* ---------- popular APIs: auto-ranked based on hits ---------- */
 
-function ApiDirectory({ config, onTry }) {
-  const cards = config.endpoints.map((item) => ApiCard({ item, onTry }));
-  const byId = new Map(cards.map((card) => [card.item.id, card]));
-  let category = 'all';
-  let query = '';
-
-  const chips = [{ id: 'all', label: 'All' }, ...config.categories.filter((c) => c.items.length).map((c) => ({ id: c.id, label: c.label }))].map((chip) =>
-    h(
-      'button',
-      {
-        type: 'button',
-        class: 'chip-btn',
-        'aria-pressed': String(chip.id === category),
-        onclick: () => {
-          category = chip.id;
-          chips.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.id === category)));
-          apply();
-        },
-        dataset: { id: chip.id },
-      },
-      chip.label
-    )
-  );
-
-  const searchId = 'api-search';
-  const search = h('input', {
-    class: 'input input--search',
-    id: searchId,
-    type: 'search',
-    placeholder: 'Search APIs',
-    autocomplete: 'off',
-    spellcheck: 'false',
-    oninput: () => {
-      query = search.value.trim().toLowerCase();
-      apply();
-    },
-  });
-
-  const groups = config.categories
-    .filter((c) => c.items.length)
-    .map((c) => {
-      const grid = h('div', { class: 'api-grid' }, c.items.map((item) => byId.get(item.id).el));
-      const el = h(
-        'section',
-        { class: 'api-group', 'aria-labelledby': `group-${c.id}` },
-        h(
-          'h3',
-          { class: 'api-group__title', id: `group-${c.id}` },
-          h('span', { class: 'api-group__icon' }, icon(c.icon, { size: 18 })),
-          c.label,
-          c.native ? h('span', { class: 'api-group__native', lang: cjk.test(c.native) ? 'ja' : null }, c.native) : null,
-          h('span', { class: 'api-group__count' }, String(c.items.length))
-        ),
-        grid
-      );
-      return { id: c.id, el, items: c.items };
-    });
-
-  const empty = h('div', { class: 'api-empty', hidden: true }, EmptyState({ icon: 'search', tone: 'muted', title: 'No APIs match your search', text: 'Try a different word or pick another category.' }));
-
-  function apply() {
-    let shown = 0;
-    for (const group of groups) {
-      let visibleInGroup = 0;
-      for (const item of group.items) {
-        const haystack = `${item.name} ${item.desc} ${item.path} ${group.id}`.toLowerCase();
-        const match = (category === 'all' || category === group.id) && (!query || query.split(/\s+/).every((word) => haystack.includes(word)));
-        byId.get(item.id).el.hidden = !match;
-        if (match) visibleInGroup++;
+function PopularApis({ config, onTry }) {
+  const container = h('div', { class: 'api-grid' });
+  const empty = h('div', { class: 'api-empty', hidden: true }, EmptyState({ icon: 'activity', tone: 'muted', title: 'No statistics available', text: 'Displaying default APIs.' }));
+  
+  // Default fallback: first 4 endpoints
+  const fallbackItems = config.endpoints.slice(0, 4);
+  let currentCards = [];
+  
+  const renderCards = (items, states = new Map()) => {
+    container.innerHTML = '';
+    currentCards = items.map(item => {
+      const card = ApiCard({ item, onTry });
+      if (states.has(item.id)) {
+        card.setState(states.get(item.id));
       }
-      group.el.hidden = visibleInGroup === 0;
-      shown += visibleInGroup;
-    }
-    empty.hidden = shown > 0;
-    announce(`${shown} ${shown === 1 ? 'API' : 'APIs'} shown`);
-  }
+      return card;
+    });
+    currentCards.forEach(card => container.append(card.el));
+  };
 
-  const el = h(
-    'div',
-    { class: 'directory' },
-    h(
-      'div',
-      { class: 'directory__bar' },
-      h('div', { class: 'chip-row', role: 'group', 'aria-label': 'Filter by category' }, chips),
-      h('div', { class: 'search-field' }, h('label', { class: 'sr-only', for: searchId }, 'Search APIs'), icon('search', { size: 18, className: 'search-field__icon' }), search)
-    ),
-    groups.map((group) => group.el),
-    empty
-  );
+  renderCards(fallbackItems);
+
+  const el = h('div', { class: 'directory' }, container, empty);
 
   return {
     el,
     setStates(model) {
-      const states = new Map(model.services.map((service) => [service.id, service.state]));
-      for (const card of cards) card.setState(model.ok ? states.get(card.item.id) || 'operational' : null);
-    },
+      if (!model.ok || !model.services) {
+         // Keep fallback but update states if any
+         const states = new Map((model.services || []).map((s) => [s.id, s.state]));
+         renderCards(fallbackItems, states);
+         return;
+      }
+      
+      const states = new Map(model.services.map((s) => [s.id, s.state]));
+      const requestsMap = new Map(model.services.map((s) => [s.id, s.requests || 0]));
+      
+      // Filter only real endpoints (not the gateway)
+      const endpoints = config.endpoints.filter(e => requestsMap.has(e.id));
+      
+      // Sort DESC by request count
+      const sortedEndpoints = [...endpoints].sort((a, b) => {
+        const reqA = requestsMap.get(a.id) || 0;
+        const reqB = requestsMap.get(b.id) || 0;
+        return reqB - reqA;
+      });
+      
+      const POPULAR_API_LIMIT = 4;
+      const topApis = sortedEndpoints.slice(0, POPULAR_API_LIMIT);
+      renderCards(topApis, states);
+    }
   };
 }
 
@@ -164,8 +119,8 @@ async function main() {
   );
 
   let playground;
-  const directory = ApiDirectory({ config, onTry: (item) => playground.open(item.id) });
-  const apis = h('section', { class: 'container section', id: 'apis', 'aria-labelledby': 'apis-title' }, SectionHeader({ id: 'apis-title', title: 'Popular APIs' }), directory.el);
+  const popular = PopularApis({ config, onTry: (item) => playground.open(item.id) });
+  const apis = h('section', { class: 'container section', id: 'apis', 'aria-labelledby': 'apis-title' }, SectionHeader({ id: 'apis-title', title: 'Popular APIs' }), popular.el);
 
   playground = ApiPlayground({ config, initialId: showcaseEndpoint(config).id });
   const playgroundSection = h(
@@ -196,7 +151,7 @@ async function main() {
   const model = buildStatusModel(result, config);
   hero.setStatus(model.overall);
   shell.setSystem(model.overall);
-  directory.setStates(model);
+  popular.setStates(model);
   if (model.ok) {
     requests.set(fmtCompact(model.totals.requests));
     uptime.set(model.totals.requests > 0 ? fmtUptime(model.totals.availability) : '—');

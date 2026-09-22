@@ -51,26 +51,14 @@
       "icon": "sparkles",
       "items": [
         {
-          "name": "LuminAI",
-          "desc": "Talk with luminai",
-          "path": "/ai/luminai?text=",
+          "name": "Algolia Agent Studio",
+          "desc": "Talk with algolia agent studio",
+          "path": "/ai/algolia?text=",
           "icon": "sparkles",
           "params": {
             "text": { "description": "The message to send to the model.", "example": "Hello! Who are you?" }
           },
-          "sample": { "result": "Hi! I'm LuminAI. How can I help you today?" }
-        },
-        {
-          "name": "HydroMind",
-          "desc": "Talk with hydromind",
-          "path": "/ai/hydromind?text=&model=",
-          "innerDesc": "See the list of supported AI models here: https://mind.hydrooo.web.id",
-          "icon": "cpu",
-          "params": {
-            "text": { "description": "The message to send to the model.", "example": "Hello!" },
-            "model": { "description": "ID of the model to use. Supported models are listed at https://mind.hydrooo.web.id" }
-          },
-          "sample": { "result": "Hello! How can I help you today?" }
+          "sample": { "result": "Hi! I'm an Algolia Agent. How can I help you today?" }
         }
       ]
     },
@@ -109,6 +97,32 @@
                 "link": "https://youtube.com/watch?v=VIDEO_ID"
               }
             ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tools (ツール)",
+      "icon": "tool",
+      "items": [
+        {
+          "name": "JPG to PDF",
+          "desc": "Convert JPG image to PDF using iLovePDF",
+          "path": "/tools/jpg2pdf?url=",
+          "icon": "file-text",
+          "response": "pdf",
+          "params": {
+            "url": { "description": "URL of the JPG image to convert.", "example": "https://example.com/image.jpg" }
+          }
+        },
+        {
+          "name": "Remove BG",
+          "desc": "Remove image background using iLoveIMG",
+          "path": "/tools/removebg?url=",
+          "icon": "image",
+          "response": "image",
+          "params": {
+            "url": { "description": "URL of the image to process.", "example": "https://example.com/image.jpg" }
           }
         }
       ]

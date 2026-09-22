@@ -11,14 +11,17 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^1.6.8",
+    "axios-cookiejar-support": "^7.0.0",
     "body-parser": "^1.20.3",
+    "chalk": "^4.1.2",
     "cheerio": "^1.0.0",
     "cors": "^2.8.5",
-    "chalk": "^4.1.2",
     "express": "^4.19.2",
+    "form-data": "^4.0.6",
     "fs": "^0.0.1-security",
     "https": "^1.0.0",
     "node-fetch": "^2.6.1",
+    "tough-cookie": "^6.0.2",
     "yt-search": "^2.12.1"
   }
 }
