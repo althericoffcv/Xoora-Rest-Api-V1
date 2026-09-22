@@ -74,16 +74,18 @@ app.get(['/docs', '/status'], (req, res) => {
 });
 
 app.use((req, res, next) => {
-    res.status(404).sendFile(process.cwd() + "/api-page/404.html");
+    res.status(404).sendFile(path.join(__dirname, "api-page", "404.html"));
 });
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).sendFile(process.cwd() + "/api-page/500.html");
+    res.status(500).sendFile(path.join(__dirname, "api-page", "500.html"));
 });
 
-app.listen(PORT, () => {
-    console.log(chalk.bgHex('#90EE90').hex('#333').bold(` Server is running on port ${PORT} `));
-});
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(chalk.bgHex('#90EE90').hex('#333').bold(` Server is running on port ${PORT} `));
+    });
+}
 
 module.exports = app;

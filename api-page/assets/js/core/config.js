@@ -8,7 +8,7 @@ export const DEFAULT_TAGLINE = 'Simple, reliable and high-performance REST APIs 
 
 export const DEFAULT_ASSETS = {
   logo: 'https://files.catbox.moe/n4dwml.png',
-  favicon: 'https://files.catbox.moe/kijnl7.jpg',
+  favicon: '/src/icon.png',
   hero: 'https://files.catbox.moe/xwhhwj.png',
   docsRobot: 'https://files.catbox.moe/gfd4bv.png',
   statusHealthy: 'https://files.catbox.moe/9a74v6.png',
