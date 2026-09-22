@@ -1,7 +1,6 @@
 const axios = require('axios');
 const FormData = require('form-data');
 const { CookieJar } = require('tough-cookie');
-const { wrapper } = require('axios-cookiejar-support');
 const https = require('https');
 
 const BASE_URL = 'https://www.ilovepdf.com';
@@ -46,6 +45,7 @@ module.exports = function(app) {
             const outputFilename = filename.replace(/\.[^.]+$/, '.pdf');
 
             const jar = new CookieJar();
+            const { wrapper } = await import('axios-cookiejar-support');
             const client = wrapper(axios.create({ jar, withCredentials: true, maxBodyLength: Infinity, timeout: 120000 }));
             const plainAxios = axios.create({ timeout: 60000 });
             
