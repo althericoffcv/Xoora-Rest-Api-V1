@@ -11,6 +11,14 @@
   ],
   "routes": [
     {
+      "src": "/assets/(.*)",
+      "dest": "/api-page/assets/$1"
+    },
+    {
+      "src": "/src/(.*)",
+      "dest": "/src/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.js"
     }
